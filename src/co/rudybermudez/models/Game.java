@@ -10,7 +10,7 @@
 package co.rudybermudez.models;
 
 public class Game {
-    public static final int MAX_MISSES = 7;
+    public static final int MAX_MISSES = 6;
     private String mAnswer;
     private String mHits;
     private String mMisses;
@@ -29,7 +29,7 @@ public class Game {
         }
         letter = Character.toLowerCase(letter);
         if (mMisses.indexOf(letter) >= 0 || mHits.indexOf(letter) >= 0) {
-            throw new IllegalArgumentException(letter + " has already been guessed.");
+            throw new IllegalArgumentException(String.format("'%s' has already been guessed.",String.valueOf(letter).toUpperCase()));
         }
         return letter;
     }
@@ -81,6 +81,19 @@ public class Game {
     }
 
     public String getMisses() {
-        return mMisses;
+        String misses = "";
+        for (Character letter: mMisses.toCharArray()) {
+            misses += letter + " ";
+        }
+        return misses;
+    }
+
+    public String getProperlyCapitalizedProgress(){
+        return getCurrentProgress().substring(0,1).toUpperCase()+ getCurrentProgress().substring(1,getCurrentProgress().length());
+
+    }
+
+    public Integer getNumberOfMisses(){
+        return mMisses.length();
     }
 }

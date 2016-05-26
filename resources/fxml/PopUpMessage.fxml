@@ -22,7 +22,7 @@
     </VBox>
     <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="+Infinity" minHeight="-Infinity" minWidth="-Infinity" GridPane.rowIndex="1">
       <children>
-      <Button fx:id="okButton" alignment="CENTER" minWidth="80.0" mnemonicParsing="false" onAction="#exitWindow" text="Ok" textAlignment="CENTER" />
+      <Button fx:id="button" alignment="CENTER" minWidth="80.0" mnemonicParsing="false" onAction="#exitWindow" text="Ok" textAlignment="CENTER" />
       </children>
     </HBox>
   </children>
