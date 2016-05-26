@@ -4,7 +4,7 @@ package co.rudybermudez.controllers;
  * @Email:   hello@rudybermudez.co
  * @Date:    May 26, 2016
  * @Project: Hangman
- * @Package:    co.rudybermudez.controllers
+ * @Package: co.rudybermudez.controllers
  */
 
 import javafx.event.Event;
@@ -19,33 +19,75 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * Pop-up Message Class
+ */
 public class PopUpMessage {
 
+    /**
+     * The FXML Message label.
+     */
     @FXML
-    Label messageLabel;
+    private Label messageLabel;
+
+    /**
+     * The button.
+     */
     @FXML
-    Button okButton;
+    private Button button;
+
+    /**
+     * The Text in the Window.
+     */
     private String mMessageLabel;
+
+    /**
+     * The Window Title.
+     */
     private String mTitle;
+
+
+    /**
+     * The button text.
+     */
     private String mButtonText;
-    public PopUpMessage(String messageLabel, String title, String buttonText) {
+
+
+    /**
+     * Instantiates a new Pop-up window.
+     *
+     * @param messageLabel the message in the window
+     * @param title        the title of the window
+     * @param buttonText   the button text
+     */
+    PopUpMessage(String messageLabel, String title, String buttonText) {
         mMessageLabel = messageLabel;
         mTitle = title;
         mButtonText = buttonText;
     }
-    public PopUpMessage(String title, String messageLabel) {
+
+    /**
+     * Instantiates a new Pop-up window assuming the Button Text is "Ok".
+     *
+     * @param messageLabel the message in the window
+     * @param title        the title of the window
+     */
+    PopUpMessage(String title, String messageLabel) {
         mTitle = title;
         mMessageLabel = messageLabel;
-        mButtonText = "OK";
+        mButtonText = "Ok";
     }
 
-    public void launch() {
+    /**
+     * Launch the pop-up window.
+     */
+    void launch() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/PopUpMessage.fxml"));
             loader.setController(this);
-            Scene editorPage = new Scene(loader.load());
+            Scene scene = new Scene(loader.load());
             Stage stage = new Stage();
-            stage.setScene(editorPage);
+            stage.setScene(scene);
             stage.setTitle(mTitle);
             stage.show();
         } catch (IOException ioe) {
@@ -53,21 +95,29 @@ public class PopUpMessage {
         }
     }
 
+    /**
+     * Initialize.
+     */
     public void initialize() {
         messageLabel.setText(mMessageLabel);
-        okButton.setText(mButtonText);
+        button.setText(mButtonText);
     }
 
+    /**
+     * Exit window.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     private void exitWindow(Event actionEvent) {
         if (actionEvent instanceof KeyEvent) {
             KeyEvent keyEvent = (KeyEvent) actionEvent;
             if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-                Stage primaryStage = (Stage) okButton.getScene().getWindow();
+                Stage primaryStage = (Stage) button.getScene().getWindow();
                 primaryStage.close();
             }
         } else {
-            Stage primaryStage = (Stage) okButton.getScene().getWindow();
+            Stage primaryStage = (Stage) button.getScene().getWindow();
             primaryStage.close();
         }
 

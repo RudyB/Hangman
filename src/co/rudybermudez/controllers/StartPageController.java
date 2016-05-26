@@ -16,32 +16,55 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/**
+ * The Start page controller.
+ */
 public class StartPageController {
 
-    public Game mGame;
+    /**
+     * The FXML Exit button.
+     */
+// FXML Annotations
+    @FXML Button exitButton;
 
-    @FXML
-    Button exitButton;
-    @FXML
-    Button startButton;
-    @FXML
-    TextField wordToGuessTextField;
-    @FXML
-    GridPane gridPane;
+    /**
+     * The FXML Start button.
+     */
+    @FXML Button startButton;
 
+    /**
+     * The FXML TextField that contains the word the second player should guess.
+     */
+    @FXML TextField wordToGuessTextField;
+
+    /**
+     * The FXML main Grid pane.
+     */
+    @FXML GridPane gridPane;
+
+    /**
+     * The String that stores the word the second player should guess.
+     */
     private String mWordToGuess;
 
-    @FXML
-    public void initialize() {
 
-    }
-
+    /**
+     * Exits the application.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     private void exitApplication(ActionEvent actionEvent) {
         Stage primaryStage = (Stage) exitButton.getScene().getWindow();
         primaryStage.close();
     }
 
+
+    /**
+     * Loads the word from the wordToGuessTextField and stores it to mWordToGuess.
+     *
+     * @param actionEvent the action event
+     */
     @FXML
     private void loadWord(Event actionEvent) {
 
@@ -60,20 +83,24 @@ public class StartPageController {
             }
 
         } else {
-            PopUpMessage popUpMessage = new PopUpMessage("Error", "You must enter a word");
-            popUpMessage.launch();
+            new PopUpMessage("Error", "You must enter a word").launch();
         }
     }
 
 
+    /**
+     * Loads the MainGamePage and Starts the game.
+     *
+     * @param primaryStage the primary stage
+     */
     private void startGame(Stage primaryStage) {
         try {
             Game game = new Game(mWordToGuess);
             primaryStage.hide();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainPage.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainGamePage.fxml"));
 
-            MainPageController controller = new MainPageController();
+            MainGameController controller = new MainGameController();
             controller.setCurrentGame(game);
             loader.setController(controller);
 
