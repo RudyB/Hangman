@@ -9,31 +9,87 @@
 
 package co.rudybermudez.models;
 
+/**
+ * The model class Game.
+ */
 public class Game {
-    public static final int MAX_MISSES = 6;
+    /**
+     * The constant MAX_MISSES.
+     */
+    private static final int MAX_MISSES = 6;
+
+    /**
+     * The answer of the game.
+     */
     private String mAnswer;
+
+    /**
+     * The String of letters of the correct guesses.
+     */
     private String mHits;
+
+    /**
+     * The String of letters of the incorrect guesses.
+     */
     private String mMisses;
 
 
-    public Game(String answer) {
-        answer = answer.toLowerCase();
-        mAnswer = answer;
+    /**
+     * Instantiates a new Game.
+     *
+     * @param answer the answer
+     * @throws IllegalArgumentException the illegal argument exception
+     */
+    public Game(String answer) throws IllegalArgumentException {
+        mAnswer = validateAnswer(answer.toLowerCase());
         mHits = "";
         mMisses = "";
     }
 
+    /**
+     * Validate a guess by insuring it is a letter.
+     *
+     * @param letter the letter
+     * @return the char
+     */
     private char validateGuess(char letter) {
         if (!Character.isLetter(letter)) {
             throw new IllegalArgumentException("A letter is required");
         }
         letter = Character.toLowerCase(letter);
         if (mMisses.indexOf(letter) >= 0 || mHits.indexOf(letter) >= 0) {
-            throw new IllegalArgumentException(String.format("'%s' has already been guessed.",String.valueOf(letter).toUpperCase()));
+            throw new IllegalArgumentException(String.format("'%s' has already been guessed.", String.valueOf(letter).toUpperCase()));
         }
         return letter;
     }
 
+    /**
+     * Validate an answer by insuring it is a word.
+     *
+     * @param answer the answer
+     * @return the string
+     */
+    private String validateAnswer(String answer) {
+        if (answer.isEmpty()) {
+            throw new IllegalArgumentException("The field is blank.\n\nYou must enter a word");
+        } else {
+            for (char letter : answer.toCharArray()) {
+                if (!Character.isLetter(letter)) {
+                    throw new IllegalArgumentException(answer + " is not a valid word.");
+                }
+            }
+            return answer;
+        }
+
+    }
+
+
+    /**
+     * Method to apply guess.
+     *
+     * @param letters the letters
+     * @return the boolean
+     */
     public boolean applyGuess(String letters) {
         if (letters.length() == 0) {
             throw new IllegalArgumentException("No letter found");
@@ -41,7 +97,13 @@ public class Game {
         return applyGuess(letters.charAt(0));
     }
 
-    public boolean applyGuess(char letter) {
+    /**
+     * Helper method to apply guess
+     *
+     * @param letter the letter
+     * @return the boolean
+     */
+    private boolean applyGuess(char letter) {
         letter = validateGuess(letter);
         boolean isHit = mAnswer.indexOf(letter) >= 0;
         if (isHit) {
@@ -52,10 +114,20 @@ public class Game {
         return isHit;
     }
 
+    /**
+     * Is solved boolean.
+     *
+     * @return the boolean
+     */
     public boolean isSolved() {
         return getCurrentProgress().equalsIgnoreCase(mAnswer);
     }
 
+    /**
+     * Gets current progress.
+     *
+     * @return the current progress
+     */
     public String getCurrentProgress() {
         String progress = "";
         for (char letter : mAnswer.toCharArray()) {
@@ -68,10 +140,20 @@ public class Game {
         return progress;
     }
 
+    /**
+     * Gets number of remaining tries.
+     *
+     * @return the remaining tries
+     */
     public int getRemainingTries() {
         return MAX_MISSES - mMisses.length();
     }
 
+    /**
+     * Gets answer.
+     *
+     * @return the answer
+     */
     public String getAnswer() {
         String finalAnswer = "Game is not over yet";
         if (isSolved() || mMisses.length() >= MAX_MISSES) {
@@ -80,20 +162,36 @@ public class Game {
         return finalAnswer;
     }
 
+    /**
+     * Gets misses.
+     *
+     * @return the misses
+     */
     public String getMisses() {
         String misses = "";
-        for (Character letter: mMisses.toCharArray()) {
+        for (Character letter : mMisses.toCharArray()) {
             misses += letter + " ";
         }
         return misses;
     }
 
-    public String getProperlyCapitalizedProgress(){
-        return getCurrentProgress().substring(0,1).toUpperCase()+ getCurrentProgress().substring(1,getCurrentProgress().length());
+    /**
+     * Get properly capitalized progress string.
+     *
+     * @return the string
+     */
+    public String getProperlyCapitalizedProgress() {
+        return getCurrentProgress().substring(0, 1).toUpperCase() + getCurrentProgress().substring(1, getCurrentProgress().length());
 
     }
 
-    public Integer getNumberOfMisses(){
-        return mMisses.length();
+    /**
+     * Get number of misses for use in displaying the hangman. It subtracts 1 because the first body part in the list is
+     * at index 0.
+     *
+     * @return the integer
+     */
+    public Integer getHangmanBodyPartNumber() {
+        return mMisses.length() - 1;
     }
 }

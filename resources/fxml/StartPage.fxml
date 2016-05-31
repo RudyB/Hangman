@@ -5,7 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane onKeyReleased="#loadWord" fx:id="gridPane" fx:controller="co.rudybermudez.controllers.StartPageController" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane onKeyReleased="#createGame" fx:id="gridPane" fx:controller="co.rudybermudez.controllers.StartPageController" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -32,7 +32,7 @@
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="150.0" GridPane.rowIndex="2">
          <children>
             <Button fx:id="exitButton" onAction="#exitApplication" mnemonicParsing="false" text="Exit" />
-            <Button fx:id="startButton" onAction="#loadWord" mnemonicParsing="false" text="Start Game" />
+            <Button fx:id="startButton" onAction="#createGame" mnemonicParsing="false" text="Start Game" />
          </children>
       </HBox>
    </children>
