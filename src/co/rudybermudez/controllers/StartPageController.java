@@ -22,30 +22,33 @@ import java.io.IOException;
 public class StartPageController {
 
     /**
-     * The FXML Exit button.
+     * The Exit button.
      */
-// FXML Annotations
-    @FXML Button exitButton;
+    @FXML
+    Button exitButton;
 
     /**
-     * The FXML Start button.
+     * The Start button.
      */
-    @FXML Button startButton;
+    @FXML
+    Button startButton;
 
     /**
-     * The FXML TextField that contains the word the second player should guess.
+     * The TextField that contains the word the second player should guess.
      */
-    @FXML TextField wordToGuessTextField;
+    @FXML
+    TextField wordToGuessTextField;
 
     /**
-     * The FXML main Grid pane.
+     * The main Grid pane.
      */
-    @FXML GridPane gridPane;
+    @FXML
+    GridPane gridPane;
 
     /**
-     * The String that stores the word the second player should guess.
+     * The M current game.
      */
-    private String mWordToGuess;
+    private Game mCurrentGame;
 
 
     /**
@@ -61,47 +64,45 @@ public class StartPageController {
 
 
     /**
-     * Loads the word from the wordToGuessTextField and stores it to mWordToGuess.
+     * Create's an instance of Game.
      *
      * @param actionEvent the action event
      */
     @FXML
-    private void loadWord(Event actionEvent) {
-
-        if (!wordToGuessTextField.getText().equals("")) {
+    private void createGame(Event actionEvent) {
+        try {
             if (actionEvent instanceof KeyEvent) {
                 KeyEvent keyEvent = (KeyEvent) actionEvent;
                 if (keyEvent.getCode().equals(KeyCode.ENTER)) {
-                    mWordToGuess = wordToGuessTextField.getText();
+                    mCurrentGame = new Game(wordToGuessTextField.getText());
                     Stage primaryStage = (Stage) gridPane.getScene().getWindow();
-                    startGame(primaryStage);
+                    launchGame(primaryStage);
                 }
             } else {
-                mWordToGuess = wordToGuessTextField.getText();
+                mCurrentGame = new Game(wordToGuessTextField.getText());
                 Stage primaryStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-                startGame(primaryStage);
+                launchGame(primaryStage);
             }
-
-        } else {
-            new PopUpMessage("Error", "You must enter a word").launch();
+        } catch (IllegalArgumentException iae) {
+            new PopUpMessage("Error", iae.getMessage()).launch();
         }
+
     }
 
 
     /**
-     * Loads the MainGamePage and Starts the game.
+     * Loads the MainGamePage and launches the game.
      *
      * @param primaryStage the primary stage
      */
-    private void startGame(Stage primaryStage) {
+    private void launchGame(Stage primaryStage) {
         try {
-            Game game = new Game(mWordToGuess);
             primaryStage.hide();
 
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainGamePage.fxml"));
 
             MainGameController controller = new MainGameController();
-            controller.setCurrentGame(game);
+            controller.setCurrentGame(mCurrentGame);
             loader.setController(controller);
 
             Scene scene = new Scene(loader.load());
@@ -113,5 +114,6 @@ public class StartPageController {
             ex.printStackTrace();
         }
     }
+
 
 }

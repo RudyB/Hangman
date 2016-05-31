@@ -120,6 +120,9 @@ public class MainGameController {
      */
     private Game mCurrentGame;
 
+    /**
+     * A list of the hangman's body parts.
+     */
     private List<Shape> mHangmanBodyParts;
 
     /**
@@ -136,7 +139,7 @@ public class MainGameController {
      */
     public void initialize() {
         // Note the first item is null because we want the head to appear when there has been 1 incorrect letter aka index 1 not 0
-        mHangmanBodyParts = Arrays.asList(null,hangmanHead, hangmanBody, hangmanLeftArm, hangmanRightArm, hangmanLeftLeg, hangmanRightLeg);
+        mHangmanBodyParts = Arrays.asList(hangmanHead, hangmanBody, hangmanLeftArm, hangmanRightArm, hangmanLeftLeg, hangmanRightLeg);
         newGameButton.setVisible(false);
         updateDisplay();
         gridPane.setOnKeyReleased(event -> play(event.getText()));
@@ -232,7 +235,7 @@ public class MainGameController {
      */
     private void updateHangmanVisual() {
         if (!mCurrentGame.getMisses().isEmpty())
-            mHangmanBodyParts.get(mCurrentGame.getNumberOfMisses()).setVisible(true);
+            mHangmanBodyParts.get(mCurrentGame.getHangmanBodyPartNumber()).setVisible(true);
     }
 
 
