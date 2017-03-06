@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
@@ -151,7 +152,7 @@ public class MainGameController {
      * @param actionEvent the action event
      */
     @FXML
-    private void exitApplication(ActionEvent actionEvent) {
+    private void exitApplication(MouseEvent actionEvent) {
         Stage primaryStage = (Stage) exitButton.getScene().getWindow();
         primaryStage.close();
     }

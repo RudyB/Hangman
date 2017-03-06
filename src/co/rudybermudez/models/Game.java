@@ -91,7 +91,7 @@ public class Game {
      * @return the boolean
      */
     public boolean applyGuess(String letters) {
-        if (letters.length() == 0) {
+        if (letters.trim().length() == 0) {
             throw new IllegalArgumentException("No letter found");
         }
         return applyGuess(letters.charAt(0));
